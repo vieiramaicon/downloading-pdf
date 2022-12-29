@@ -39,6 +39,14 @@ Route::get('/downloading', function() {
     return view('downloading', ['arquivos' => $arquivos]);
 });
 
+Route::post('/downloading', function(Request $request) {
+    $arquivo = Arquivo::find($request->id);
+    
+    return response($arquivo->arquivo)
+                ->header('Content-Type', 'application/pdf')
+                ->header('Content-Disposition', 'attachment; filename=' . $arquivo->nome .'.pdf');
+});
+
 Route::get('/downloading/{id}', function($id) {
     $arquivo = Arquivo::find($id);
 
